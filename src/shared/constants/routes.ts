@@ -1,7 +1,8 @@
 const ROUTES = {
-  home: '/',
-  tweets: '/tweets',
-  any: '*',
+  home: "/",
+  recipes: "/recipes",
+  recipe: "/recipes/:recipeId",
+  any: "*",
 };
 
-export const { home, tweets, any } = ROUTES;
+export const { home, recipes, recipe, any } = ROUTES;
