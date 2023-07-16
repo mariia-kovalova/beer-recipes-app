@@ -1,7 +1,7 @@
 export interface IBeerItem {
-  // user: string;
-  // tweets: number;
-  // followers: number;
-  // avatar: string;
-  // id: string;
+  id: number;
+  name: string;
+  tagline: string;
+  description: string;
+  image_url: string;
 }
