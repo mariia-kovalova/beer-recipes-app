@@ -1,4 +1,4 @@
-export interface IBeerItem {
+export interface IRecipe {
   id: number;
   name: string;
   tagline: string;
