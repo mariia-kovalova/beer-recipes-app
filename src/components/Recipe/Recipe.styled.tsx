@@ -11,8 +11,12 @@ export const Card = styled.div`
 
   padding: 20px;
 
-  border-radius: 20px;
-  box-shadow: -2.5777px 6.87386px 20.6216px rgba(0, 0, 0, 0.23);
+  border-radius: 11px;
+  border: 1px solid #f5f5f5;
+  background: #fff;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+
+  text-align: center;
 `;
 
 export const Wrap = styled.div`
@@ -24,14 +28,5 @@ export const Wrap = styled.div`
 `;
 
 export const Name = styled.p`
-  text-align: center;
   font-weight: 600;
-`;
-
-export const Tagline = styled.p`
-  text-align: center;
-`;
-
-export const Description = styled.p`
-  font-size: 14px;
 `;

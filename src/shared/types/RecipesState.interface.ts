@@ -6,7 +6,7 @@ export interface IRecipesState {
   currentRecipe: IRecipe | null;
   isLoading: boolean;
   error: null | AxiosError;
-  getAll: (page: number) => void;
+  get: (page: number) => void;
   getById: (id: number | string) => void;
   removeById: (recipeId: number) => void;
 }

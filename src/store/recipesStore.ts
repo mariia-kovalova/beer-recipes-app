@@ -1,8 +1,8 @@
 import { create } from "zustand";
 import { IRecipesState } from "../shared/types/RecipesState.interface";
-import { getRecipes } from "../api/recipesApi";
 import { AxiosError } from "axios";
 import { immer } from "zustand/middleware/immer";
+import { recipesApi } from "../api/recipes.api";
 
 export const useRecipesStore = create<IRecipesState>()(
   immer((set) => ({
@@ -10,12 +10,12 @@ export const useRecipesStore = create<IRecipesState>()(
     currentRecipe: null,
     isLoading: false,
     error: null,
-    getAll: async (page) => {
+    get: async (page) => {
       try {
         set({ error: null, isLoading: true });
-        const recipes = await getRecipes.getAll(page);
+        const recipes = await recipesApi.get(page);
         set((state) => {
-          state.recipes = [...state.recipes, ...recipes];
+          state.recipes = recipes;
         });
       } catch (error) {
         set({ error: error as AxiosError });
@@ -26,7 +26,7 @@ export const useRecipesStore = create<IRecipesState>()(
     getById: async (id) => {
       try {
         set({ error: null, isLoading: true });
-        const recipe = await getRecipes.getById(id);
+        const recipe = await recipesApi.getById(id);
         set({ currentRecipe: recipe[0] });
       } catch (error) {
         set({ error: error as AxiosError });

@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
+import { desktop, tablet } from "../../shared/constants/devicesSizes";
 
 export const List = styled.ul`
   display: flex;
@@ -10,7 +11,15 @@ export const List = styled.ul`
   margin-bottom: 20px;
 
   & li {
-    flex-basis: calc((100% - (4 * 20px)) / 5);
+    flex-basis: 100%;
+
+    @media screen and (min-width: ${tablet}) {
+      flex-basis: calc((100% - (2 * 20px)) / 3);
+    }
+
+    @media screen and (min-width: ${desktop}) {
+      flex-basis: calc((100% - (4 * 20px)) / 5);
+    }
   }
 `;
 

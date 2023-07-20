@@ -4,7 +4,5 @@ export const textNormalize = {
   name: (text: string) =>
     text.length <= 14 ? text : `${text.slice(0, 16)}...`,
   tagline: (text: string) =>
-    text.length <= 16 ? text : `${text.slice(0, 18)}...`,
-  description: (text: string) =>
-    text.length <= 78 ? text : `${text.slice(0, 80)}...`,
+    text.length <= 32 ? text : `${text.slice(0, 34)}...`,
 };

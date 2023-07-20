@@ -1,6 +1,6 @@
-import '@fontsource/montserrat';
-import { css } from '@emotion/react';
-import { modernNormalizeCss } from 'emotion-modern-normalize';
+import "@fontsource/montserrat";
+import { css } from "@emotion/react";
+import { modernNormalizeCss } from "emotion-modern-normalize";
 
 export const GlobalStyles = css`
   ${modernNormalizeCss}
@@ -16,9 +16,11 @@ export const GlobalStyles = css`
   }
 
   body {
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
     padding: 0;
     margin: 0;
+
+    background-color: #f8f8f8;
   }
 
   h1,
