@@ -1,9 +1,9 @@
 {
   "files": {
     "main.css": "/beer-recipes-app/static/css/main.cc56cd11.css",
-    "main.js": "/beer-recipes-app/static/js/main.164cadb4.js",
+    "main.js": "/beer-recipes-app/static/js/main.383999e6.js",
     "static/js/278.1587b784.chunk.js": "/beer-recipes-app/static/js/278.1587b784.chunk.js",
-    "static/js/988.090fe64c.chunk.js": "/beer-recipes-app/static/js/988.090fe64c.chunk.js",
+    "static/js/988.a8c38a83.chunk.js": "/beer-recipes-app/static/js/988.a8c38a83.chunk.js",
     "static/js/904.78db7ecc.chunk.js": "/beer-recipes-app/static/js/904.78db7ecc.chunk.js",
     "static/js/18.203b5afa.chunk.js": "/beer-recipes-app/static/js/18.203b5afa.chunk.js",
     "static/js/126.83df5702.chunk.js": "/beer-recipes-app/static/js/126.83df5702.chunk.js",
@@ -19,15 +19,15 @@
     "static/media/montserrat-vietnamese-400-normal.woff2": "/beer-recipes-app/static/media/montserrat-vietnamese-400-normal.8f3f4c99eb0eeb5990f1.woff2",
     "index.html": "/beer-recipes-app/index.html",
     "main.cc56cd11.css.map": "/beer-recipes-app/static/css/main.cc56cd11.css.map",
-    "main.164cadb4.js.map": "/beer-recipes-app/static/js/main.164cadb4.js.map",
+    "main.383999e6.js.map": "/beer-recipes-app/static/js/main.383999e6.js.map",
     "278.1587b784.chunk.js.map": "/beer-recipes-app/static/js/278.1587b784.chunk.js.map",
-    "988.090fe64c.chunk.js.map": "/beer-recipes-app/static/js/988.090fe64c.chunk.js.map",
+    "988.a8c38a83.chunk.js.map": "/beer-recipes-app/static/js/988.a8c38a83.chunk.js.map",
     "904.78db7ecc.chunk.js.map": "/beer-recipes-app/static/js/904.78db7ecc.chunk.js.map",
     "18.203b5afa.chunk.js.map": "/beer-recipes-app/static/js/18.203b5afa.chunk.js.map",
     "126.83df5702.chunk.js.map": "/beer-recipes-app/static/js/126.83df5702.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.cc56cd11.css",
-    "static/js/main.164cadb4.js"
+    "static/js/main.383999e6.js"
   ]
 }
