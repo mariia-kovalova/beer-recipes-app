@@ -8,7 +8,11 @@ import {
 } from "../../store/recepiesSelectors";
 
 import { IRecipe } from "../../shared/types/Recipe.interface";
-import { totalItems } from "../../shared/constants/recipesApi";
+import {
+  itemsPerPage,
+  totalItems,
+  visableItems,
+} from "../../shared/constants/recipesApi";
 
 import { End, Title, Wrap } from "./RecipesPage.styled";
 import { Helmet } from "react-helmet-async";
@@ -19,12 +23,10 @@ import { Error } from "../../components/Error";
 import { Loader } from "../../components/Loader";
 import { ThreeDotsLoader } from "../../components/ThreeDotsLoader";
 
-const VISABLE_ITEMS = 15;
-const ITEMS_PER_PAGE = 25;
-
 const RecipesPage = () => {
   const [page, setPage] = useState<number>(1);
-  const [availableRecipes, setAvailableRecipes] = useState<IRecipe[]>([]);
+  const [avaliableRecipes, setAvailableRecipes] = useState<IRecipe[]>([]);
+  const [visibleRecipes, setVisibleRecipes] = useState<IRecipe[]>([]);
 
   const loadMoreTriggerRef = useRef(null);
   const getRecipes = useRecipesStore(selectGet);
@@ -37,16 +39,33 @@ const RecipesPage = () => {
   }, [getRecipes, page]);
 
   useEffect(() => {
-    setAvailableRecipes((prevRecipes) => [...prevRecipes, ...recipes]);
+    if (recipes.length !== 0) setAvailableRecipes(recipes);
   }, [recipes]);
+
+  useEffect(() => {
+    const updateVisableRecipes = () => {
+      if (visibleRecipes.length !== 0 && avaliableRecipes.length === 0)
+        return setPage((prevPage) => prevPage + 1);
+
+      if (visibleRecipes.length < visableItems) {
+        const diff = visableItems - visibleRecipes.length;
+
+        setVisibleRecipes((prevRecipes) => [
+          ...prevRecipes,
+          ...avaliableRecipes.slice(0, diff),
+        ]);
+        setAvailableRecipes((prevRecipes) => prevRecipes.slice(diff));
+      }
+    };
+
+    updateVisableRecipes();
+  }, [avaliableRecipes, visibleRecipes]);
 
   useEffect(() => {
     const handleObserver = (entries: any) => {
       const target = entries[0];
       if (target.isIntersecting) {
-        setAvailableRecipes((prevRecipes) => prevRecipes.slice(5));
-        const shouldLoadMore = availableRecipes.length <= VISABLE_ITEMS;
-        if (shouldLoadMore) setPage((prevPage) => prevPage + 1);
+        setVisibleRecipes((prevRecipes) => [...prevRecipes.slice(5)]);
       }
     };
 
@@ -67,7 +86,11 @@ const RecipesPage = () => {
   const renderPreloader = recipes?.length === 0 && isLoading;
   const renderLoader = recipes?.length > 0 && isLoading;
   const renderList = recipes?.length > 0 && !error;
-  const hasMore = page < Math.ceil(totalItems / ITEMS_PER_PAGE);
+  const hasMore =
+    recipes?.length > 0 &&
+    !isLoading &&
+    !error &&
+    page < Math.ceil(totalItems / itemsPerPage);
 
   return (
     <>
@@ -78,9 +101,7 @@ const RecipesPage = () => {
         <Container>
           <Title>Beer Recipes</Title>
           {renderPreloader && <Loader />}
-          {renderList && (
-            <RecipesList recipes={availableRecipes.slice(0, VISABLE_ITEMS)} />
-          )}
+          {renderList && <RecipesList recipes={visibleRecipes} />}
           <Wrap>
             {renderLoader && <ThreeDotsLoader />}
             {error && <Error />}
