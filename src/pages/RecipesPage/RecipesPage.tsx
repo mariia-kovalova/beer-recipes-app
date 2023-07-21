@@ -39,7 +39,7 @@ const RecipesPage = () => {
   }, [getRecipes, page]);
 
   useEffect(() => {
-    if (recipes.length !== 0) setAvailableRecipes(recipes);
+    setAvailableRecipes(recipes);
   }, [recipes]);
 
   useEffect(() => {
