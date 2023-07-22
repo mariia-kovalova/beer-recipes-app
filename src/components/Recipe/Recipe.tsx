@@ -15,7 +15,7 @@ export const Recipe: FC<IRecipe> = ({ id, name, tagline, image_url }) => {
       <Wrap>
         <img src={image_url} alt={name} width="60" loading="lazy" />
       </Wrap>
-      <p>{id}</p>
+      <p># {id}</p>
       <Name>{textNormalize.name(name)}</Name>
       <p>{textNormalize.tagline(tagline)}</p>
     </Card>

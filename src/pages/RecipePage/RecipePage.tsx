@@ -17,6 +17,7 @@ import { Loader } from "../../components/Loader";
 import { GoBack } from "../../components/GoBack";
 import { Error } from "../../components/Error";
 import { textNormalize } from "../../shared/helpers/textNormalize";
+import { Description, Info, Name, Recipe, Wrap } from "./RecipePage.styled";
 
 const RecipePage = () => {
   const location = useLocation();
@@ -44,10 +45,23 @@ const RecipePage = () => {
         <Container>
           <GoBack path={path} />
           {showRecipe && (
-            <>
-              <div>{recipe.id}</div>
-              <div>{recipe.name}</div>
-            </>
+            <Recipe>
+              <Wrap>
+                <img
+                  src={recipe.image_url}
+                  alt={recipe.name}
+                  width="50"
+                  loading="lazy"
+                />
+                <Info>
+                  <Name>
+                    # {recipe.id} {recipe.name}
+                  </Name>
+                  <p>{recipe.tagline}</p>
+                </Info>
+              </Wrap>
+              <Description>{recipe.description}</Description>
+            </Recipe>
           )}
           {isLoading && <Loader />}
           {showError && <Error />}
