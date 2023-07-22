@@ -15,7 +15,6 @@ import { Section } from "../../shared/styles/components/Section.styled";
 import { Container } from "../../shared/styles/components/Container.styled";
 import { Loader } from "../../components/Loader";
 import { GoBack } from "../../components/GoBack";
-import { Recipe } from "../../components/Recipe";
 import { Error } from "../../components/Error";
 import { textNormalize } from "../../shared/helpers/textNormalize";
 
@@ -30,10 +29,10 @@ const RecipePage = () => {
   const error = useRecipesStore(selectError);
 
   useEffect(() => {
-    if (recipeId) getRecipeById(recipeId);
+    if (recipeId) getRecipeById(Number(recipeId));
   }, [getRecipeById, recipeId]);
 
-  const showRecipe = recipe;
+  const showRecipe = recipe && !isLoading && !error;
   const showError = !isLoading && error;
 
   return (
@@ -43,9 +42,15 @@ const RecipePage = () => {
       </Helmet>
       <Section>
         <Container>
-          {isLoading && <Loader />}
           <GoBack path={path} />
-          {showRecipe && <Recipe {...recipe} />} {showError && <Error />}
+          {showRecipe && (
+            <>
+              <div>{recipe.id}</div>
+              <div>{recipe.name}</div>
+            </>
+          )}
+          {isLoading && <Loader />}
+          {showError && <Error />}
         </Container>
       </Section>
     </>

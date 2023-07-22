@@ -1,17 +1,19 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useMemo } from "react";
 import { useRecipesStore } from "../../store/recipesStore";
 import {
   selectError,
   selectGet,
   selectIsLoading,
   selectRecipes,
+  selectReduceRecipes,
+  selectSelected,
 } from "../../store/recepiesSelectors";
 
-import { IRecipe } from "../../shared/types/Recipe.interface";
 import {
   itemsPerPage,
+  step,
   totalItems,
-  visableItems,
+  visibleItems,
 } from "../../shared/constants/recipesApi";
 
 import { End, Title, Wrap } from "./RecipesPage.styled";
@@ -22,50 +24,51 @@ import { RecipesList } from "../../components/RecipesList";
 import { Error } from "../../components/Error";
 import { Loader } from "../../components/Loader";
 import { ThreeDotsLoader } from "../../components/ThreeDotsLoader";
+import { DeleteButton } from "../../components/DeleteButton";
 
 const RecipesPage = () => {
   const [page, setPage] = useState<number>(1);
-  const [avaliableRecipes, setAvailableRecipes] = useState<IRecipe[]>([]);
-  const [visibleRecipes, setVisibleRecipes] = useState<IRecipe[]>([]);
 
   const loadMoreTriggerRef = useRef(null);
+
   const getRecipes = useRecipesStore(selectGet);
+  const reduceRecipes = useRecipesStore(selectReduceRecipes);
   const recipes = useRecipesStore(selectRecipes);
+  const selectedRecipesIds = useRecipesStore(selectSelected);
   const isLoading = useRecipesStore(selectIsLoading);
   const error = useRecipesStore(selectError);
+
+  const visibleRecipes = useMemo(
+    () => recipes.slice(0, visibleItems),
+    [recipes]
+  );
+
+  const ableLoadMore = useMemo(
+    () =>
+      recipes?.length > 0 &&
+      !isLoading &&
+      !error &&
+      (recipes.length > visibleItems ||
+        page < Math.ceil(totalItems / itemsPerPage)),
+    [error, isLoading, page, recipes.length]
+  );
 
   useEffect(() => {
     getRecipes(page);
   }, [getRecipes, page]);
 
   useEffect(() => {
-    setAvailableRecipes(recipes);
-  }, [recipes]);
+    if (visibleRecipes.length % 5 !== 0 && ableLoadMore)
+      setPage((prevPage) => prevPage + 1);
+  }, [ableLoadMore, visibleRecipes.length]);
 
   useEffect(() => {
-    const updateVisableRecipes = () => {
-      if (visibleRecipes.length !== 0 && avaliableRecipes.length === 0)
-        return setPage((prevPage) => prevPage + 1);
-
-      if (visibleRecipes.length < visableItems) {
-        const diff = visableItems - visibleRecipes.length;
-
-        setVisibleRecipes((prevRecipes) => [
-          ...prevRecipes,
-          ...avaliableRecipes.slice(0, diff),
-        ]);
-        setAvailableRecipes((prevRecipes) => prevRecipes.slice(diff));
-      }
-    };
-
-    updateVisableRecipes();
-  }, [avaliableRecipes, visibleRecipes]);
-
-  useEffect(() => {
-    const handleObserver = (entries: any) => {
+    const handleObserver = (entries: IntersectionObserverEntry[]) => {
       const target = entries[0];
       if (target.isIntersecting) {
-        setVisibleRecipes((prevRecipes) => [...prevRecipes.slice(5)]);
+        reduceRecipes(step);
+
+        if (recipes.length <= visibleItems) setPage((prevPage) => prevPage + 1);
       }
     };
 
@@ -86,11 +89,7 @@ const RecipesPage = () => {
   const renderPreloader = recipes?.length === 0 && isLoading;
   const renderLoader = recipes?.length > 0 && isLoading;
   const renderList = recipes?.length > 0 && !error;
-  const hasMore =
-    recipes?.length > 0 &&
-    !isLoading &&
-    !error &&
-    page < Math.ceil(totalItems / itemsPerPage);
+  const renderDeleteButton = selectedRecipesIds?.length > 0;
 
   return (
     <>
@@ -101,13 +100,17 @@ const RecipesPage = () => {
         <Container>
           <Title>Beer Recipes</Title>
           {renderPreloader && <Loader />}
+
           {renderList && <RecipesList recipes={visibleRecipes} />}
+
           <Wrap>
             {renderLoader && <ThreeDotsLoader />}
             {error && <Error />}
-            {hasMore && <div ref={loadMoreTriggerRef} />}
-            {!hasMore && <End>End of content</End>}
+            {ableLoadMore && <div ref={loadMoreTriggerRef} />}
+            {!ableLoadMore && <End>End of content</End>}
           </Wrap>
+
+          {renderDeleteButton && <DeleteButton />}
         </Container>
       </Section>
     </>

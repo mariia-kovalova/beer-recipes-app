@@ -18,6 +18,10 @@ export const Title = styled.h1`
 `;
 
 export const Wrap = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   height: 60px;
 `;
 

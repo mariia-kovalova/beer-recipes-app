@@ -7,6 +7,7 @@ import { recipesApi } from "../api/recipes.api";
 export const useRecipesStore = create<IRecipesState>()(
   immer((set) => ({
     recipes: [],
+    selected: [],
     currentRecipe: null,
     isLoading: false,
     error: null,
@@ -14,9 +15,9 @@ export const useRecipesStore = create<IRecipesState>()(
       try {
         set({ error: null, isLoading: true });
         const recipes = await recipesApi.get(page);
-        set((state) => {
-          state.recipes = recipes;
-        });
+        set((state) => ({
+          recipes: page === 1 ? recipes : [...state.recipes, ...recipes],
+        }));
       } catch (error) {
         set({ error: error as AxiosError });
       } finally {
@@ -34,9 +35,20 @@ export const useRecipesStore = create<IRecipesState>()(
         set({ isLoading: false });
       }
     },
-    removeById: (recipeId) => {
+    reduceRecipes: (index) => {
+      set((state) => ({ recipes: state.recipes.slice(index) }));
+    },
+    toggleIsSelected: (id) => {
       set((state) => ({
-        recipes: state.recipes.filter((recipe) => recipe.id !== recipeId),
+        selected: state.selected.includes(id)
+          ? state.selected.filter((currentId) => currentId !== id)
+          : [...state.selected, id],
+      }));
+    },
+    removeSelectedRecipes: () => {
+      set((state) => ({
+        recipes: state.recipes.filter(({ id }) => !state.selected.includes(id)),
+        selected: [],
       }));
     },
   }))

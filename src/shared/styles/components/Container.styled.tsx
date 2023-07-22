@@ -1,5 +1,5 @@
-import styled from '@emotion/styled';
-import { desktop, tablet } from '../../constants/devicesSizes';
+import styled from "@emotion/styled";
+import { desktop, tablet } from "../../constants/devicesSizes";
 
 export const Container = styled.div`
   width: 320px;
