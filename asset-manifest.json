@@ -1,10 +1,10 @@
 {
   "files": {
     "main.css": "/beer-recipes-app/static/css/main.cc56cd11.css",
-    "main.js": "/beer-recipes-app/static/js/main.26b73c2a.js",
+    "main.js": "/beer-recipes-app/static/js/main.874f2e42.js",
     "static/js/278.a912622d.chunk.js": "/beer-recipes-app/static/js/278.a912622d.chunk.js",
-    "static/js/290.c92d9516.chunk.js": "/beer-recipes-app/static/js/290.c92d9516.chunk.js",
-    "static/js/904.2b3ce1d2.chunk.js": "/beer-recipes-app/static/js/904.2b3ce1d2.chunk.js",
+    "static/js/290.cf0a21ba.chunk.js": "/beer-recipes-app/static/js/290.cf0a21ba.chunk.js",
+    "static/js/530.c1262121.chunk.js": "/beer-recipes-app/static/js/530.c1262121.chunk.js",
     "static/js/401.285ad01d.chunk.js": "/beer-recipes-app/static/js/401.285ad01d.chunk.js",
     "static/js/126.83df5702.chunk.js": "/beer-recipes-app/static/js/126.83df5702.chunk.js",
     "static/media/montserrat-latin-400-normal.woff": "/beer-recipes-app/static/media/montserrat-latin-400-normal.0f1794a79a689a577c2a.woff",
@@ -19,15 +19,15 @@
     "static/media/montserrat-vietnamese-400-normal.woff2": "/beer-recipes-app/static/media/montserrat-vietnamese-400-normal.8f3f4c99eb0eeb5990f1.woff2",
     "index.html": "/beer-recipes-app/index.html",
     "main.cc56cd11.css.map": "/beer-recipes-app/static/css/main.cc56cd11.css.map",
-    "main.26b73c2a.js.map": "/beer-recipes-app/static/js/main.26b73c2a.js.map",
+    "main.874f2e42.js.map": "/beer-recipes-app/static/js/main.874f2e42.js.map",
     "278.a912622d.chunk.js.map": "/beer-recipes-app/static/js/278.a912622d.chunk.js.map",
-    "290.c92d9516.chunk.js.map": "/beer-recipes-app/static/js/290.c92d9516.chunk.js.map",
-    "904.2b3ce1d2.chunk.js.map": "/beer-recipes-app/static/js/904.2b3ce1d2.chunk.js.map",
+    "290.cf0a21ba.chunk.js.map": "/beer-recipes-app/static/js/290.cf0a21ba.chunk.js.map",
+    "530.c1262121.chunk.js.map": "/beer-recipes-app/static/js/530.c1262121.chunk.js.map",
     "401.285ad01d.chunk.js.map": "/beer-recipes-app/static/js/401.285ad01d.chunk.js.map",
     "126.83df5702.chunk.js.map": "/beer-recipes-app/static/js/126.83df5702.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.cc56cd11.css",
-    "static/js/main.26b73c2a.js"
+    "static/js/main.874f2e42.js"
   ]
 }
