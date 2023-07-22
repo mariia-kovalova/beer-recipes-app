@@ -22,6 +22,13 @@ export const Card = styled.div<CardProps>`
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 
   text-align: center;
+
+  transition: all 250ms ${({ theme }) => theme.cubic};
+
+  a:hover &,
+  a:focus & {
+    transform: scale(1.05);
+  }
 `;
 
 export const Wrap = styled.div`

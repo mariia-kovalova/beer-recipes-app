@@ -1,7 +1,6 @@
 import { useEffect, useState, useRef, useMemo } from "react";
 import { useRecipesStore } from "../../store/recipesStore";
 import {
-  selectDeleted,
   selectError,
   selectGet,
   selectIsLoading,
@@ -36,16 +35,12 @@ const RecipesPage = () => {
   const reduceRecipes = useRecipesStore(selectReduceRecipes);
   const recipes = useRecipesStore(selectRecipes);
   const selectedRecipesIds = useRecipesStore(selectSelected);
-  const deletedRecipesIds = useRecipesStore(selectDeleted);
   const isLoading = useRecipesStore(selectIsLoading);
   const error = useRecipesStore(selectError);
 
   const visibleRecipes = useMemo(
-    () =>
-      recipes
-        .slice(0, visibleItems)
-        .filter(({ id }) => !deletedRecipesIds.includes(id)),
-    [deletedRecipesIds, recipes]
+    () => recipes.slice(0, visibleItems),
+    [recipes]
   );
 
   const ableLoadMore = useMemo(
@@ -53,8 +48,7 @@ const RecipesPage = () => {
       recipes?.length > 0 &&
       !isLoading &&
       !error &&
-      (recipes.length > visibleItems ||
-        page < Math.ceil(totalItems / itemsPerPage)),
+      page < Math.ceil(totalItems / itemsPerPage),
     [error, isLoading, page, recipes.length]
   );
 
@@ -63,17 +57,15 @@ const RecipesPage = () => {
   }, [getRecipes, page]);
 
   useEffect(() => {
-    if (visibleRecipes.length % 5 !== 0 && ableLoadMore)
+    if (recipes.length <= visibleItems && ableLoadMore)
       setPage((prevPage) => prevPage + 1);
-  }, [ableLoadMore, visibleRecipes.length]);
+  }, [ableLoadMore, recipes.length]);
 
   useEffect(() => {
     const handleObserver = (entries: IntersectionObserverEntry[]) => {
       const target = entries[0];
       if (target.isIntersecting && selectedRecipesIds.length === 0) {
         reduceRecipes(step);
-
-        if (recipes.length <= visibleItems) setPage((prevPage) => prevPage + 1);
       }
     };
 
@@ -94,7 +86,9 @@ const RecipesPage = () => {
   const renderPreloader = recipes?.length === 0 && isLoading;
   const renderLoader = recipes?.length > 0 && isLoading;
   const renderList = recipes?.length > 0 && !error;
-  const renderEnd = page >= Math.ceil(totalItems / itemsPerPage);
+  const renderEnd =
+    recipes.length === visibleItems &&
+    page >= Math.ceil(totalItems / itemsPerPage);
   const renderDeleteButton = selectedRecipesIds?.length > 0;
 
   return (

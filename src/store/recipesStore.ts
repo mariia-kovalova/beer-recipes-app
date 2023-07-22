@@ -18,9 +18,18 @@ export const useRecipesStore = create<IRecipesState>()(
         try {
           set({ error: null, isLoading: true });
           const recipes = await recipesApi.get(page);
-          set((state) => ({
-            recipes: page === 1 ? recipes : [...state.recipes, ...recipes],
-          }));
+
+          set((state) => {
+            const filteredRecipes = recipes.filter(
+              ({ id }) => !state.deleted.includes(id)
+            );
+            return {
+              recipes:
+                page === 1
+                  ? filteredRecipes
+                  : [...state.recipes, ...filteredRecipes],
+            };
+          });
         } catch (error) {
           set({ error: error as AxiosError });
         } finally {
