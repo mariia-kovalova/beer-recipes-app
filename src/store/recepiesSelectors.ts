@@ -2,6 +2,7 @@ import { IRecipesState } from "../shared/types/RecipesState.interface";
 
 export const selectRecipes = (state: IRecipesState) => state.recipes;
 export const selectSelected = (state: IRecipesState) => state.selected;
+export const selectDeleted = (state: IRecipesState) => state.deleted;
 export const selectCurrentRecipe = (state: IRecipesState) =>
   state.currentRecipe;
 export const selectIsLoading = (state: IRecipesState) => state.isLoading;

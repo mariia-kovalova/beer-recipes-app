@@ -4,6 +4,7 @@ import { AxiosError } from "axios";
 export interface IRecipesState {
   recipes: IRecipe[];
   selected: number[];
+  deleted: number[];
   currentRecipe: IRecipe | null;
   isLoading: boolean;
   error: null | AxiosError;

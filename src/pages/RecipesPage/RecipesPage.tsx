@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef, useMemo } from "react";
 import { useRecipesStore } from "../../store/recipesStore";
 import {
+  selectDeleted,
   selectError,
   selectGet,
   selectIsLoading,
@@ -35,12 +36,16 @@ const RecipesPage = () => {
   const reduceRecipes = useRecipesStore(selectReduceRecipes);
   const recipes = useRecipesStore(selectRecipes);
   const selectedRecipesIds = useRecipesStore(selectSelected);
+  const deletedRecipesIds = useRecipesStore(selectDeleted);
   const isLoading = useRecipesStore(selectIsLoading);
   const error = useRecipesStore(selectError);
 
   const visibleRecipes = useMemo(
-    () => recipes.slice(0, visibleItems),
-    [recipes]
+    () =>
+      recipes
+        .slice(0, visibleItems)
+        .filter(({ id }) => !deletedRecipesIds.includes(id)),
+    [deletedRecipesIds, recipes]
   );
 
   const ableLoadMore = useMemo(
@@ -65,7 +70,7 @@ const RecipesPage = () => {
   useEffect(() => {
     const handleObserver = (entries: IntersectionObserverEntry[]) => {
       const target = entries[0];
-      if (target.isIntersecting) {
+      if (target.isIntersecting && selectedRecipesIds.length === 0) {
         reduceRecipes(step);
 
         if (recipes.length <= visibleItems) setPage((prevPage) => prevPage + 1);
@@ -89,6 +94,7 @@ const RecipesPage = () => {
   const renderPreloader = recipes?.length === 0 && isLoading;
   const renderLoader = recipes?.length > 0 && isLoading;
   const renderList = recipes?.length > 0 && !error;
+  const renderEnd = page >= Math.ceil(totalItems / itemsPerPage);
   const renderDeleteButton = selectedRecipesIds?.length > 0;
 
   return (
@@ -107,7 +113,7 @@ const RecipesPage = () => {
             {renderLoader && <ThreeDotsLoader />}
             {error && <Error />}
             {ableLoadMore && <div ref={loadMoreTriggerRef} />}
-            {!ableLoadMore && <End>End of content</End>}
+            {renderEnd && <End>End of content</End>}
           </Wrap>
 
           {renderDeleteButton && <DeleteButton />}
